@@ -3,3 +3,10 @@
 
 #include "Character/AuraCharacter.h"
 
+AAuraCharacter::AAuraCharacter()
+{
+}
+
+void AAuraCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+}
