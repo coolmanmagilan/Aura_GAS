@@ -20,4 +20,6 @@ public:
 
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+
+	const int Stencil = 150;
 };

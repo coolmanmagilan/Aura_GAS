@@ -10,7 +10,7 @@ AEnemyCharacter::AEnemyCharacter()
 
 void AEnemyCharacter::HighlightActor()
 {
-
+	/*
 	DrawDebugSphere(GetWorld(),
 		GetActorLocation(),
 		50,
@@ -18,9 +18,17 @@ void AEnemyCharacter::HighlightActor()
 		FColor::Red,
 		false,
 		5);
+	*/
 
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(Stencil);
+
+	Weapon->SetRenderCustomDepth(true);
+	Weapon->SetCustomDepthStencilValue(Stencil);
 }	
 
 void AEnemyCharacter::UnHighlightActor()
 {
+	GetMesh()->SetRenderCustomDepth(false);
+	Weapon->SetRenderCustomDepth(false);
 }
