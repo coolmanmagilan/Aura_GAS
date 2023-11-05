@@ -6,6 +6,8 @@
 #include "Character/BaseCharacter.h"
 #include "AuraCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
 /**
  * 
  */
@@ -18,9 +20,16 @@ public:
 
 	AAuraCharacter();
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 protected:
-	
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Component")
+	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Component")
+	UCameraComponent* CameraComponent;
+
+	void GetAuraMovement();
+	void GetAuraComponent();
+
 };
