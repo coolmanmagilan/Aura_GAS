@@ -4,14 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Character/BaseCharacter.h"
+#include "Interaction/EnemyInterface.h"
 #include "EnemyCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class AEnemyCharacter : public ABaseCharacter
+class AEnemyCharacter : public ABaseCharacter, public IEnemyInterface //IEnemyInterface is a custom class that we created
 {
 	GENERATED_BODY()
 	
+public:
+	AEnemyCharacter();
+
+	virtual void HighlightActor() override;
+	virtual void UnHighlightActor() override;
 };

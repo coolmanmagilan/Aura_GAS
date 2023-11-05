@@ -3,9 +3,9 @@
 
 #include "Player/AuraPlayerController.h"
 #include "InputMappingContext.h"
-#include "InputAction.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -49,7 +49,7 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	//CursorTrace();
+	CursorTrace();
 }
 
 void AAuraPlayerController::SetupInputComponent()
@@ -89,5 +89,49 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	}
 }
 
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
 
+	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
 
+	if (!CursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor; //update enemy your highlight
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor()); //anything hit touch become 'thisactor'
+
+	/*
+	-Line trace from cursor. There are several scenarios
+	-A. if LastActor is null && ThisActor is null(wall or floor or something that is not an enemy), then do nothing
+	-B. if LastActor is null && ThisActor is valid(ThisActor is an enemy), call Highlight of ThisActor
+	-C. if LasterActor is valid && ThisActor is null(unhighlight LastActor)
+	-D. if both actors are valid, but LastActor != ThisActor, then switch Highlight from LastActor to ThisActor
+	-E. if both actors are valid, but LastActor == ThisActor(we are hovering over the same actor), do nothing
+	*/
+
+	if (LastActor == nullptr) {
+		if (ThisActor != nullptr) {
+			ThisActor->HighlightActor();	 //case B
+		//	UE_LOG(LogTemp, Display, TEXT("CASE B"));
+		}
+		else {
+		//	UE_LOG(LogTemp, Display, TEXT("CASE A"));							//case A
+		}
+	}
+	else { //LastActor != nullptr(is valid)
+		if (ThisActor == nullptr) {
+			LastActor->UnHighlightActor();	//case C
+		//	UE_LOG(LogTemp, Display, TEXT("CASE C"));
+		}
+		else {
+			if (LastActor != ThisActor) {
+				LastActor->UnHighlightActor();
+				ThisActor->HighlightActor();  //case D
+			//	UE_LOG(LogTemp, Display, TEXT("CASE D"));
+			}
+			else {
+			//	UE_LOG(LogTemp, Display, TEXT("CASE E")); //case E
+			}
+		}
+	}
+}
