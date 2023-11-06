@@ -5,12 +5,29 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/AuraPlayerState.h"
+#include "AbilitySystemComponent.h" //we never included this file in base cpp. All we did in base was foward declare this
 
 AAuraCharacter::AAuraCharacter()
 {
 	
 	GetAuraMovement();
 	GetAuraComponent();
+}
+
+void AAuraCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	//Init Ability Actor info for the server
+	GetInitAbilityActorInfo();
+}
+
+void AAuraCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	GetInitAbilityActorInfo();
 }
 
 void AAuraCharacter::GetAuraMovement() {
@@ -33,6 +50,18 @@ void AAuraCharacter::GetAuraComponent()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
+}
+
+void AAuraCharacter::GetInitAbilityActorInfo()
+{
+	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	
+	//AttributeSet and AbilitySystemComponent are declared in PlayerState class
+	//if we call call AbilitySystemComponent and AttributeSet from AuraCharacter, we will instead get it from state class
+	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
+	AttributeSet = AuraPlayerState->GetAttributeSet();
 }
 
 

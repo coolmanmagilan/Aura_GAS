@@ -18,8 +18,11 @@ class AEnemyCharacter : public ABaseCharacter, public IEnemyInterface //IEnemyIn
 public:
 	AEnemyCharacter();
 
+	virtual void BeginPlay() override;
+
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 
 	const int Stencil = 150;
+
 };

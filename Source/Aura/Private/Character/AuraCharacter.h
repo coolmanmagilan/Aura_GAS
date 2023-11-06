@@ -21,6 +21,10 @@ public:
 	AAuraCharacter();
 
 protected:
+	virtual void PossessedBy(AController* NewController) override;
+
+	virtual void OnRep_PlayerState() override;
+
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Component")
@@ -31,5 +35,7 @@ private:
 
 	void GetAuraMovement();
 	void GetAuraComponent();
+
+	void GetInitAbilityActorInfo();
 
 };
