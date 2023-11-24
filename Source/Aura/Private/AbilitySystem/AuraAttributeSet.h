@@ -29,7 +29,7 @@ public:
 
 	/*
 	--------------------------------------------------------------------------------------------------
-	Returns the properties used for network replication his needs to be overridden by all actor classes 
+	Returns the properties used for network replication this needs to be overridden by all actor classes 
 	with native replicated properties
 	*/
 	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const;
