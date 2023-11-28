@@ -22,9 +22,10 @@ void AAuraPlayerController::BeginPlay()
 	//Local Player Subsystem allows us to use mapping context
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 
-	check(Subsystem);
-	Subsystem->AddMappingContext(InputMappingContext, 0);
-
+	//important to if check if game is multiplayer
+	if (Subsystem) {
+		Subsystem->AddMappingContext(InputMappingContext, 0);
+	}
 	//Show Mouse cursor when game begins
 	bShowMouseCursor = true;
 

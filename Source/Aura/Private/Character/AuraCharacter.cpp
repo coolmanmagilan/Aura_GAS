@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystemComponent.h" //we never included this file in base cpp. All we did in base was foward declare this
+#include "Player/AuraPlayerController.h"
+#include "UI/HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -62,6 +64,14 @@ void AAuraCharacter::GetInitAbilityActorInfo()
 	//if we call call AbilitySystemComponent and AttributeSet from AuraCharacter, we will instead get it from state class
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController())) {
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD())) {
+			AuraHUD->InitOverlay(AuraPlayerController,AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	};
+
+
 }
 
 
