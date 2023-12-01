@@ -33,8 +33,13 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 	UOverlayAuraWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
+	//WBP_Overlay will have it's widget controller set too
 	OverlayWidget->SetWidgetController(OverlayWidgetController);
 
+	//After we set our Widgets to a WidgetController, we initialize it's initial values
+	WidgetController->BroadcastInitialValues();
+
 	Widget->AddToViewport();
+
 }
 

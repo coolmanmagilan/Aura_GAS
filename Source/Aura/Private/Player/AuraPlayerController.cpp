@@ -22,7 +22,8 @@ void AAuraPlayerController::BeginPlay()
 	//Local Player Subsystem allows us to use mapping context
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 
-	//important to if check if game is multiplayer
+	
+	//we don't need to assert check since we only need our local controller
 	if (Subsystem) {
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}

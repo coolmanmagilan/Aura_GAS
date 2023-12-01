@@ -19,8 +19,7 @@ struct FWidgetControllerParams {
 
 	GENERATED_BODY()
 
-	FWidgetControllerParams() {
-	};
+	FWidgetControllerParams() {};
 
 	/*PC = Player Controller 
 	  PS = Player State*/
@@ -54,6 +53,8 @@ class UAuraWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
+
+	virtual void BroadcastInitialValues();
 
 	
 protected:
