@@ -6,6 +6,7 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "OverlayAuraWidgetController.generated.h"
 
+struct FOnAttributeChangeData;
 
 /*We create dynamic multicast delegates because
 1. we want to assign events to them in Widget Blueprint(WBP)  ---dynamic
@@ -29,6 +30,9 @@ Note, we can check all common delegate Macro such as DECLARE_DYNAMIC_MULTICAST_D
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthMaxSignature, float, MaxHealth);
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaMaxSignature, float, MaxMana);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewMana);
 /**
  * 
  */
@@ -39,6 +43,7 @@ class UOverlayAuraWidgetController : public UAuraWidgetController
 
 public:
 	virtual void BroadcastInitialValues() override;
+	virtual void BindCallbacksToDependencies() override;
 
 	/*It should be noted that FOnHealthChangedSignature is the delegate type 
 	  but OnHealthChanged is the delegate*/
@@ -48,6 +53,17 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnHealthMaxSignature OnMaxHealthChanged;
 
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
+	FOnManaChangedSignature OnManaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
+	FOnManaMaxSignature OnMaxManaChanged;
+
 private:
-	
+
+protected:
+	void HealthChanged(const FOnAttributeChangeData& Data) const;
+	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
+	void ManaChanged(const FOnAttributeChangeData& Data) const;
+	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
 };
