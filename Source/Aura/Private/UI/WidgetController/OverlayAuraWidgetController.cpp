@@ -13,7 +13,7 @@ void UOverlayAuraWidgetController::BroadcastInitialValues()
 	//DON'T FORGET POINTERS!!! YOU ARE CONVERTING POINTER TO POINTER. NOT POINTER TO VARIABLE
 	//IF YOU CAN, TRY TO ASSIGN VARIABLE AND INSTANT TO CONST BY DEFAULT
 
-
+	//broadcast initial values to blueplrint
 	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
