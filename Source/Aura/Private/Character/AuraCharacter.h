@@ -36,6 +36,7 @@ private:
 	void GetAuraMovement();
 	void GetAuraComponent();
 
-	void GetInitAbilityActorInfo();
+	//This is InitAbilityActorInfo in course
+	virtual void GetInitAbilityActorInfo() override;
 
 };

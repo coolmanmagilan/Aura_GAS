@@ -25,4 +25,7 @@ public:
 
 	const int Stencil = 150;
 
+protected:
+	virtual void GetInitAbilityActorInfo() override;
+
 };

@@ -30,3 +30,7 @@ void ABaseCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 }
+
+void ABaseCharacter::GetInitAbilityActorInfo()
+{
+}
